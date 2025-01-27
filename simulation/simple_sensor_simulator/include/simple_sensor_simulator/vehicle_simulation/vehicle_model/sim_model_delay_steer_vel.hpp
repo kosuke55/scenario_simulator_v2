@@ -15,12 +15,15 @@
 #ifndef SIMPLE_PLANNING_SIMULATOR__VEHICLE_MODEL__SIM_MODEL_DELAY_STEER_VEL_HPP_
 #define SIMPLE_PLANNING_SIMULATOR__VEHICLE_MODEL__SIM_MODEL_DELAY_STEER_VEL_HPP_
 
+#include "simple_sensor_simulator/vehicle_simulation/utils/acc_pid_controller.hpp"
 #include <deque>
 #include <eigen3/Eigen/Core>
 #include <eigen3/Eigen/LU>
 #include <iostream>
 #include <queue>
 #include <simple_sensor_simulator/vehicle_simulation/vehicle_model/sim_model_interface.hpp>
+#include <simple_sensor_simulator/vehicle_simulation/utils/acc_pid_controller.hpp>
+
 /**
  * @class SimModelDelaySteerVel
  * @brief calculate delay steering dynamics
@@ -41,11 +44,14 @@ public:
    * @param [in] steer_delay time delay for steering command [s]
    * @param [in] steer_time_constant time constant for 1D model of steering dynamics
    * @param [in] steer_dead_band dead band for steering angle [rad]
+   * @param [in] kp proportional gain for acceleration PID controller
+   * @param [in] ki integral gain for acceleration PID controller
+   * @param [in] kd derivative gain for acceleration PID controller
    */
   SimModelDelaySteerVel(
     double vx_lim, double steer_lim, double vx_rate_lim, double steer_rate_lim, double wheelbase,
     double dt, double vx_delay, double vx_time_constant, double steer_delay,
-    double steer_time_constant, double steer_dead_band);
+    double steer_time_constant, double steer_dead_band, double kp, double ki, double kd);
 
   /**
    * @brief destructor
@@ -61,6 +67,7 @@ private:
     YAW,
     VX,
     STEER,
+    ACCX,
   };
   enum IDX_U {
     VX_DES = 0,
@@ -84,6 +91,8 @@ private:
   const double
     steer_time_constant_;  //!< @brief time constant for 1D model of angular-velocity dynamics
   const double steer_dead_band_;  //!< @brief dead band for steering angle [rad]
+
+  AccPIDController acc_pid_controller_;  //!< @brief acceleration PID controller
 
   /**
    * @brief set queue buffer for input command

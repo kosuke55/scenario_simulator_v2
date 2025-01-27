@@ -158,8 +158,7 @@ auto EgoEntitySimulation::makeSimulationModel(
     case VehicleModelType::DELAY_STEER_VEL:
       return std::make_shared<SimModelDelaySteerVel>(
         vel_lim, steer_lim, vel_rate_lim, steer_rate_lim, wheel_base, step_time, vel_time_delay,
-        vel_time_constant, steer_time_delay, steer_time_constant, steer_dead_band);
-
+        vel_time_constant, steer_time_delay, steer_time_constant, steer_dead_band, 10.0, 0.0, 0.0);
     case VehicleModelType::IDEAL_STEER_ACC:
       return std::make_shared<SimModelIdealSteerAcc>(wheel_base);
 

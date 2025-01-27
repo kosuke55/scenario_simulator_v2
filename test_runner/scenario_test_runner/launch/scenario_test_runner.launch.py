@@ -82,7 +82,7 @@ def launch_setup(context, *args, **kwargs):
     output_directory                    = LaunchConfiguration("output_directory",                       default=Path("/tmp"))
     port                                = LaunchConfiguration("port",                                   default=5555)
     publish_empty_context               = LaunchConfiguration("publish_empty_context",                  default=False)
-    record                              = LaunchConfiguration("record",                                 default=True)
+    record                          = LaunchConfiguration("record",                         default=False)
     rviz_config                         = LaunchConfiguration("rviz_config",                            default=default_rviz_config_file())
     scenario                            = LaunchConfiguration("scenario",                               default=Path("/dev/null"))
     sensor_model                        = LaunchConfiguration("sensor_model",                           default="")
